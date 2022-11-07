@@ -48,8 +48,13 @@ while (count <= gridWidth * gridWidth) {
 
 // Add queries for all your squares, palette colors, and brush here.
 // (Note the singular or plural used in that sentence!)
+let brush = document.querySelector('.current-brush');
 
+let palette = document.querySelectorAll('.palette div');
 
+let canvasSquares = document.querySelectorAll('.canvas div');
+
+let app = document.querySelector('.app');
 
 /****************************
  * EVENT LISTENER FUNCTIONS *
@@ -61,7 +66,56 @@ while (count <= gridWidth * gridWidth) {
 // run as event listeners (after the next step is set up) isn't a
 // bad idea for testing purposes.
 
+brush.addEventListener('click', function(){
+  console.log('brush');
+})
 
+for(let i = 0; i < palette.length; i++){
+  palette[i].addEventListener('click', function(){
+    console.log(palette[i].classList);
+    brush.classList.replace(brush.classList[1],palette[i].classList[1]);
+  })
+}
+
+let isMouseDown = false;
+
+for(let square of canvasSquares){
+  // //click paint function
+  // square.addEventListener('click', function(){
+  //   square.classList.replace(square.classList[1],brush.classList[1]);
+  // })
+
+  //Drag paint function
+  // square.addEventListener('mouseout', function(){
+  //   square.classList.replace(square.classList[1],brush.classList[1]);
+
+  square.addEventListener('mouseout', function(){
+    if(isMouseDown === true){
+    square.classList.replace(square.classList[1],brush.classList[1]);
+    } 
+  })
+}
+
+// let isMouseDown = false;
+
+app.addEventListener('mousedown', function(){
+  //test
+    console.log('Mouse is down');
+    isMouseDown = true;
+    console.log('isMouseDown: ' + isMouseDown);
+    
+  })
+
+app.addEventListener('mouseup', function(){
+  //test
+  console.log('Mouse is up');
+  isMouseDown = false;
+  console.log('isMouseDown: ' + isMouseDown);
+})
+
+// mouseout - is a scroll over reaction
+//mousedown - user clicks and holds
+//mouseup - check when user releases that left click
 
 /**************************
  * WIRING IT ALL TOGETHER *
